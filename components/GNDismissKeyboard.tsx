@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { TouchableWithoutFeedback, Keyboard, View } from 'react-native';
 
 interface GNDismissKeayboardProps {
-  Component: React.ComponentClass;
+  children: ReactNode;
 }
 
-const GNDismissKeayboard: React.FC<any> = ({ children, ...props }) => {
+const GNDismissKeyboard: React.FC<GNDismissKeayboardProps> = ({ children }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View>{children}</View>
+      {children}
     </TouchableWithoutFeedback>
   );
 };
 
-export default GNDismissKeayboard;
+export default GNDismissKeyboard;
