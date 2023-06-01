@@ -1,31 +1,49 @@
 import { HStack, VStack } from 'native-base';
-import { useState } from 'react';
-import { TextInput, StyleSheet, View, Text } from 'react-native';
+import { useEffect, useState } from 'react';
+import { TextInput, StyleSheet, View, Text, Alert } from 'react-native';
 import GNButton from '../components/GNButton';
 
 const StartGameScreen = () => {
-  const [number, setNumber] = useState('56');
+  const [number, setNumber] = useState<string>('');
+
+  const resetNumber = () => {
+    setNumber('');
+  };
+
+  const confirmNumber = () => {
+    if (number === '0' || number === '') {
+      Alert.alert('Invalid number', 'Number must be between 1 and 99', [
+        {
+          text: 'Retry',
+          style: 'destructive',
+          onPress: () => resetNumber(),
+        },
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    console.log(number);
+  }, [number]);
 
   return (
     <View style={styles.container}>
       <VStack style={{ width: '100%' }} space={3}>
         <Text style={styles.title}>Select a number</Text>
-        <View style={{ width: '100%' }}>
-          <TextInput
-            maxLength={2}
-            keyboardType="number-pad"
-            autoCapitalize="none"
-            autoCorrect={false}
-            style={styles.numberInput}
-            value={number}
-            selectionColor="#fbbf24"
-            onChangeText={(e) => setNumber(e)}
-          />
-          <HStack justifyContent="space-between" width="90%" alignSelf="center">
-            <GNButton onPress={() => console.log('here')} text="Reset" />
-            <GNButton onPress={() => console.log('ceva')} text="Confirm" />
-          </HStack>
-        </View>
+        <TextInput
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.numberInput}
+          value={number}
+          selectionColor="#fbbf24"
+          onChangeText={(e) => setNumber(e)}
+        />
+        <HStack justifyContent="space-between" width="90%" alignSelf="center">
+          <GNButton onPress={resetNumber} text="Reset" />
+          <GNButton onPress={confirmNumber} text="Confirm" />
+        </HStack>
       </VStack>
     </View>
   );
