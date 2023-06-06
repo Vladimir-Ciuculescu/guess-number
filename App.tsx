@@ -4,7 +4,7 @@ import { NativeBaseProvider, Text } from 'native-base';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import { SafeAreaView, Platform } from 'react-native';
-import GNDismissKeyboard from './components/GNDismissKeyboard';
+import GNDismissKeyboard from './components/common/GNDismissKeyboard';
 import { Fragment, useEffect, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import Dices from './assets/Dices.avif';

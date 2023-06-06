@@ -1,8 +1,8 @@
 import { HStack, VStack, Text } from 'native-base';
 import { useState } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
-import GNButton from '../components/GNButton';
-import GNTextInput from '../components/GNTextInput';
+import GNButton from '../components/common/GNButton';
+import GNTextInput from '../components/common/GNTextInput';
 
 interface StartGameScreenProps {
   onConfirm: (e: string) => void;
@@ -37,8 +37,8 @@ const StartGameScreen: React.FC<StartGameScreenProps> = ({ onConfirm }) => {
         </Text>
         <GNTextInput value={number} setValue={setNumber} />
         <HStack justifyContent="space-between" width="90%" alignSelf="center">
-          <GNButton onPress={resetNumber} text="Reset" />
-          <GNButton onPress={confirmNumber} text="Confirm" />
+          <GNButton onPress={resetNumber} text={<Text>Reset</Text>} />
+          <GNButton onPress={confirmNumber} text={<Text>Confirm</Text>} />
         </HStack>
       </VStack>
     </View>
