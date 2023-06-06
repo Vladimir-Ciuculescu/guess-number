@@ -2,13 +2,20 @@ import { StatusBar } from 'expo-status-bar';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import { NativeBaseProvider, Text } from 'native-base';
 import StartGameScreen from './screens/StartGameScreen';
+import GameScreen from './screens/GameScreen';
 import { SafeAreaView, Platform } from 'react-native';
 import GNDismissKeyboard from './components/GNDismissKeyboard';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import Dices from './assets/Dices.avif';
 
 export default function App() {
+  const [userNumber, setUserNumber] = useState<string>('');
+
+  const confirmUserNumber = (number: string) => {
+    setUserNumber(number);
+  };
+
   return (
     <NativeBaseProvider>
       <SafeAreaView
@@ -18,7 +25,7 @@ export default function App() {
           marginBottom: '-10%',
         }}>
         <Text fontSize={20} textAlign="center" color="white">
-          Guess the number
+          Guess number
         </Text>
         <GNDismissKeyboard>
           <LinearGradient
@@ -31,7 +38,11 @@ export default function App() {
               imageStyle={styles.backgroundImage}>
               <Fragment>
                 <StatusBar style="auto" />
-                <StartGameScreen />
+                {userNumber !== '' ? (
+                  <GameScreen userNumber={userNumber} />
+                ) : (
+                  <StartGameScreen onConfirm={confirmUserNumber} />
+                )}
               </Fragment>
             </ImageBackground>
           </LinearGradient>
