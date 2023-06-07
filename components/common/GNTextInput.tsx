@@ -25,6 +25,7 @@ export default GNTextInput;
 
 const styles = StyleSheet.create({
   numberInput: {
+    fontFamily: 'ChrushtyRock',
     height: 50,
     fontSize: 32,
     fontWeight: 'bold',

@@ -8,13 +8,42 @@ import GNDismissKeyboard from './components/common/GNDismissKeyboard';
 import { Fragment, useEffect, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import Dices from './assets/Dices.avif';
+import GameOverScreen from './screens/GameOverScreen';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
   const [userNumber, setUserNumber] = useState<string>('');
+  const [gameOver, setGameOver] = useState<boolean>(false);
+
+  const [fontsLoaded] = useFonts({
+    ChrushtyRock: require('./assets/fonts/ChrustyRock.ttf'),
+    Freedom: require('./assets/fonts/Freedom.ttf'),
+  });
 
   const confirmUserNumber = (number: string) => {
     setUserNumber(number);
   };
+
+  const setEndGameHandler = () => {
+    setGameOver(true);
+  };
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
+  let screen = <StartGameScreen onConfirm={confirmUserNumber} />;
+
+  if (userNumber !== '') {
+    screen = (
+      <GameScreen userNumber={userNumber} setEndGame={setEndGameHandler} />
+    );
+  }
+
+  if (gameOver) {
+    screen = <GameOverScreen />;
+  }
 
   return (
     <NativeBaseProvider>
@@ -24,7 +53,11 @@ export default function App() {
           backgroundColor: '#10b981',
           marginBottom: '-10%',
         }}>
-        <Text fontSize={20} textAlign="center" color="white">
+        <Text
+          fontSize={20}
+          textAlign="center"
+          color="white"
+          fontFamily="Freedom">
           Guess number
         </Text>
         <GNDismissKeyboard>
@@ -38,11 +71,7 @@ export default function App() {
               imageStyle={styles.backgroundImage}>
               <Fragment>
                 <StatusBar style="auto" />
-                {userNumber !== '' ? (
-                  <GameScreen userNumber={userNumber} />
-                ) : (
-                  <StartGameScreen onConfirm={confirmUserNumber} />
-                )}
+                {screen}
               </Fragment>
             </ImageBackground>
           </LinearGradient>

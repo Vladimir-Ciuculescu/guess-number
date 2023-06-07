@@ -32,13 +32,23 @@ const StartGameScreen: React.FC<StartGameScreenProps> = ({ onConfirm }) => {
   return (
     <View style={styles.container}>
       <VStack style={{ width: '100%' }} space={3}>
-        <Text fontSize={24} textAlign="center" color="amber.400">
+        <Text
+          fontSize={24}
+          textAlign="center"
+          color="amber.400"
+          fontFamily="ChrushtyRock">
           Select a number
         </Text>
         <GNTextInput value={number} setValue={setNumber} />
         <HStack justifyContent="space-between" width="90%" alignSelf="center">
-          <GNButton onPress={resetNumber} text={<Text>Reset</Text>} />
-          <GNButton onPress={confirmNumber} text={<Text>Confirm</Text>} />
+          <GNButton
+            onPress={resetNumber}
+            text={<Text fontFamily="ChrushtyRock">Reset</Text>}
+          />
+          <GNButton
+            onPress={confirmNumber}
+            text={<Text fontFamily="ChrushtyRock">Confirm</Text>}
+          />
         </HStack>
       </VStack>
     </View>

@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import GNButton from '../components/common/GNButton';
 import { Box, HStack, Text, View, VStack } from 'native-base';
-
+import { AntDesign } from '@expo/vector-icons';
 interface GameScreenProps {
   userNumber: string;
+  setEndGame: () => void;
 }
 
 enum directions {
@@ -12,18 +13,17 @@ enum directions {
   greater = 'greater',
 }
 
-const GameScreen: React.FC<GameScreenProps> = ({ userNumber }) => {
+const GameScreen: React.FC<GameScreenProps> = ({ userNumber, setEndGame }) => {
   const [computerChoice, setComputerChoice] = useState<string>('');
-  let minValue = 1;
-  let maxValue = 99;
+  const [min, setMin] = useState(1);
+  const [max, setMax] = useState(99);
 
   const generateRandomNumber: any = (
     min: number,
     max: number,
     exclude: number,
   ) => {
-    console.log(max);
-    const randomNumber = Math.floor(Math.random() * max - min) + min;
+    const randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
     if (randomNumber === exclude) {
       return generateRandomNumber(min, max, exclude);
     } else {
@@ -35,7 +35,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ userNumber }) => {
     Alert.alert(`Don't lie`, 'You lied to the computer !', [
       {
         text: 'Retry',
-        style: 'destructive',
+        style: 'cancel',
       },
     ]);
   };
@@ -49,23 +49,27 @@ const GameScreen: React.FC<GameScreenProps> = ({ userNumber }) => {
       return;
     }
     if (direction === directions.lower) {
-      maxValue = parseInt(computerChoice);
+      setMax(parseInt(computerChoice) - 1);
     } else if (direction === directions.greater) {
-      minValue = parseInt(computerChoice);
+      setMin(parseInt(computerChoice) + 1);
     }
-    const newGuess = generateRandomNumber(minValue, maxValue, computerChoice);
-    setComputerChoice(newGuess);
   };
 
   useEffect(() => {
-    const randomNumber = generateRandomNumber(minValue, maxValue, userNumber);
-    setComputerChoice(randomNumber);
-  }, []);
+    const randomNumber = generateRandomNumber(min, max, userNumber);
+    setComputerChoice(randomNumber.toString());
+  }, [min, max]);
+
+  useEffect(() => {
+    if (computerChoice === userNumber) {
+      setEndGame();
+    }
+  }, [computerChoice, userNumber, setEndGame]);
 
   return (
     <View mt={10}>
       <VStack alignItems="center" space={5}>
-        <Text color="amber.400" fontSize={28}>
+        <Text color="amber.400" fontSize={28} fontFamily="ChrushtyRock">
           Opponent's guess
         </Text>
         <Box
@@ -77,12 +81,12 @@ const GameScreen: React.FC<GameScreenProps> = ({ userNumber }) => {
           alignItems="center"
           w={20}
           h={20}>
-          <Text color="amber.400" fontSize={30}>
+          <Text color="amber.400" fontSize={30} fontFamily="ChrushtyRock">
             {computerChoice}
           </Text>
         </Box>
-        <Text color="amber.400" fontSize={20}>
-          Was the number higher or lower ?{' '}
+        <Text color="amber.400" fontSize={20} fontFamily="ChrushtyRock">
+          Was the number higher or lower ?
         </Text>
         <Box
           w="80%"
@@ -93,12 +97,20 @@ const GameScreen: React.FC<GameScreenProps> = ({ userNumber }) => {
           <HStack justifyContent="space-evenly">
             <GNButton
               style={{ borderRadius: 15 }}
-              text={<Text style={{ fontSize: 24 }}>-</Text>}
+              text={
+                <Text style={{ fontSize: 24 }}>
+                  <AntDesign name="minus" color="black" size={18} />
+                </Text>
+              }
               onPress={() => nextGuessHandler(directions.lower)}
             />
             <GNButton
               style={{ borderRadius: 15 }}
-              text={<Text style={{ fontSize: 24 }}>+</Text>}
+              text={
+                <Text style={{ fontSize: 24 }}>
+                  <AntDesign name="plus" color="black" size={18} />
+                </Text>
+              }
               onPress={() => nextGuessHandler(directions.greater)}
             />
           </HStack>
