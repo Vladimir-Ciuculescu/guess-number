@@ -21,3 +21,20 @@ After the number is confirmed, it takes the user to the game screen, where it sh
  </p>
 
 Finally, if the computer guessed the chosen number, the game is over. The game over screen shows how many rounds it took the computer to guess the number and it even displays the history of its guesses.
+
+## Setup
+To setup this project, clone the repo and run: 
+
+```
+npm install
+// OR
+yarn
+```
+
+After that, to start the project run:
+
+```
+npm start
+// OR
+expo start
+```
