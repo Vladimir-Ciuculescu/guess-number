@@ -1,7 +1,7 @@
 Guess the number is a mini project made in React Native. It follows Max Schwarzmueller's React Native Course and it consists of a game where you enter a number.
 After that, the computer tries to guess the number you chose. After every time the computer made a guess, you need to give it hints wether the guess is higher or lower than the chosen number.
 
-![guess-number-1](https://github.com/Vladimir-Ciuculescu/guess-number/assets/97725392/a8b7a85f-b963-4b67-b98f-c7226a445d28 | width=100)
+![guess-number-1](https://github.com/Vladimir-Ciuculescu/guess-number/assets/97725392/a8b7a85f-b963-4b67-b98f-c7226a445d28 | width=100px)
 <img src="(https://github.com/Vladimir-Ciuculescu/guess-number/assets/97725392/a8b7a85f-b963-4b67-b98f-c7226a445d28" width="100" height="100">
 ![guess-number-2](https://github.com/Vladimir-Ciuculescu/guess-number/assets/97725392/60781ccb-f08d-4c61-9755-f7419dc82fe1)
 
